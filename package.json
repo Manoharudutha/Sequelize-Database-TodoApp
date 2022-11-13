@@ -1,0 +1,21 @@
+{
+  "name": "todoapp-database-milestone",
+  "version": "1.0.0",
+  "description": "Adding Database and their operations to Todo Application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manohar Udutha <manoharudutha@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "minimist": "^1.2.7",
+    "sequelize-cli": "^6.5.2"
+  },
+  "dependencies": {
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.25.5"
+  }
+}

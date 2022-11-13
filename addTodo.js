@@ -5,7 +5,6 @@ const db = require("./models/index");
 const createTodo = async (params) => {
   try {
     const addedTodo = await db.Todo.addTask(params);
-    console.log("Created an Item with ID: " + addedTodo.id);
   } catch (error) {
     console.error(error);
   }

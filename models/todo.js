@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
 
+    // static associate(models) {
+    //   // define association here
+    // }
+
     static async addTask(params) {
       return await Todo.create(params);
     }
@@ -15,15 +19,27 @@ module.exports = (sequelize, DataTypes) => {
       console.log("My Todo list \n");
 
       console.log("Overdue");
-      console.log(await this.overdue());
+      const overdueTodos = await this.overdue();
+      const oversdueItemsStr = overdueTodos
+        .map((todo) => todo.displayableString())
+        .join("\n");
+      console.log(oversdueItemsStr);
       console.log("\n");
 
       console.log("Due Today");
-      console.log(await this.dueToday());
+      const dueTodayTodos = await this.dueToday();
+      const dueTodayItemsStr = dueTodayTodos
+        .map((todo) => todo.displayableString())
+        .join("\n");
+      console.log(dueTodayItemsStr);
       console.log("\n");
 
       console.log("Due Later");
-      console.log(await this.dueLater());
+      const dueLaterTodos = await this.dueLater();
+      const dueLaterItemsStr = dueLaterTodos
+        .map((todo) => todo.displayableString())
+        .join("\n");
+      console.log(dueLaterItemsStr);
     }
 
     static async overdue() {
@@ -35,17 +51,13 @@ module.exports = (sequelize, DataTypes) => {
         const dateToday = new Date();
         const today = formattedDate(dateToday);
 
-        const overdueTodos = await Todo.findAll({
+        return await Todo.findAll({
           where: {
             dueDate: {
               [Op.lt]: today,
             },
           },
         });
-        const oversdueItemsStr = overdueTodos
-          .map((todo) => todo.displayableString())
-          .join("\n");
-        return oversdueItemsStr;
       } catch (error) {
         console.error(error);
       }
@@ -60,17 +72,13 @@ module.exports = (sequelize, DataTypes) => {
         const dateToday = new Date();
         const today = formattedDate(dateToday);
 
-        const dueTodayTodos = await Todo.findAll({
+        return await Todo.findAll({
           where: {
             dueDate: {
               [Op.eq]: today,
             },
           },
         });
-        const dueTodayItemsStr = dueTodayTodos
-          .map((todo) => todo.displayableString())
-          .join("\n");
-        return dueTodayItemsStr;
       } catch (error) {
         console.error(error);
       }
@@ -85,17 +93,13 @@ module.exports = (sequelize, DataTypes) => {
         const dateToday = new Date();
         const today = formattedDate(dateToday);
 
-        const dueLaterTodos = await Todo.findAll({
+        return await Todo.findAll({
           where: {
             dueDate: {
               [Op.gt]: today,
             },
           },
         });
-        const dueLaterItemsStr = dueLaterTodos
-          .map((todo) => todo.displayableString())
-          .join("\n");
-        return dueLaterItemsStr;
       } catch (error) {
         console.error(error);
       }
@@ -103,7 +107,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static async markAsComplete(id) {
       try {
-        Todo.update(
+        return await Todo.update(
           { completed: true },
           {
             where: {

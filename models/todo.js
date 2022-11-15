@@ -127,8 +127,11 @@ module.exports = (sequelize, DataTypes) => {
         return d.toISOString().split("T")[0];
       };
 
+      const dateToday = new Date();
+      const today = formattedDate(dateToday);
       const newDueDate = formattedDate(this.dueDate);
 
+      if (newDueDate === today) return `${this.id}. ${checkbox} ${this.title}`;
       return `${this.id}. ${checkbox} ${this.title} ${newDueDate}`;
     }
   }

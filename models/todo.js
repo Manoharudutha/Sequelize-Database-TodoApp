@@ -131,8 +131,9 @@ module.exports = (sequelize, DataTypes) => {
       const today = formattedDate(dateToday);
       const newDueDate = formattedDate(this.dueDate);
 
-      if (newDueDate === today) return `${this.id}. ${checkbox} ${this.title}`;
-      return `${this.id}. ${checkbox} ${this.title} ${newDueDate}`;
+      if (newDueDate === today)
+        return `${this.id}. ${checkbox} ${this.title}`.trim();
+      return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`.trim();
     }
   }
   Todo.init(
